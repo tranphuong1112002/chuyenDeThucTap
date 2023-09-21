@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/recruitment
+    username: root
+    password: a
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Bangkok
+
+server:
+  port: 18080
+  servlet:
+    context-path: /api
+  error:
+    whitelabel:
+      enabled: true
