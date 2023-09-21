@@ -67,7 +67,31 @@ public class CandidateServiceImpl implements CandidateService {
             .findById(id)
             .orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
     String genderName = candidate.getGender().getName();
+    String fullName = Utils.getFullName(candidate.getLastName(), candidate.getFirstName());
+    CandidateDetailDTO candidateDetailDTO =
+        CandidateDetailDTO.builder()
+            .id(candidate.getId())
+            .firstName(candidate.getFirstName())
+            .lastName(candidate.getLastName())
+            .candidateCode(candidate.getCandidateCode())
+            .phone(candidate.getPhone())
+            .birthDate(candidate.getBirthDate())
+            .address(candidate.getAddress())
+            .level(candidate.getLevel())
+            .gender(candidate.getGender())
+            .genderName(genderName)
+            .numberOfExp(candidate.getNumberOfExp())
+            .fullName(fullName)
+            .build();
+    return candidateDetailDTO;
+  }
 
-    return null;
+  @Override
+  public void deleteCandidate(int id) {
+    Candidate candidate =
+        candidateRepository
+            .findById(id)
+            .orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
+    candidateRepository.delete(candidate);
   }
 }

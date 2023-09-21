@@ -27,4 +27,15 @@ public class CandidateController {
     candidateService.updateCandidate(id, dto);
     return ResponseEntity.status(HttpStatus.ACCEPTED).build();
   }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<?> getCandidate(@PathVariable(name = "id") int id) {
+    return ResponseEntity.status(HttpStatus.OK).body(candidateService.getCandidate(id));
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> deleteCandidate(@PathVariable(name = "id") int id) {
+    candidateService.deleteCandidate(id);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  }
 }

@@ -13,4 +13,7 @@ public interface CandidateService {
 
     // lấy chi tiết ứng viên
     CandidateDetailDTO getCandidate(int id);
+
+    // xoá ứng viên
+    void deleteCandidate(int id);
 }

@@ -21,8 +21,8 @@ public class Utils {
         return Utils.convertToString(lastName) + " " + Utils.convertToString(firstName);
     }
 
-    //
+    // lấy tên đầy đủ
     public static String getFullName(String lastName, String firstName) {
-
+        return lastName + " " + firstName;
     }
 }
