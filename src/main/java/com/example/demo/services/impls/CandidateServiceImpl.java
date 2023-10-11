@@ -3,18 +3,35 @@ package com.example.demo.services.impls;
 import com.example.demo.domains.Candidate;
 import com.example.demo.dtos.candidates.CandidateCreateDTO;
 import com.example.demo.dtos.candidates.CandidateDetailDTO;
+import com.example.demo.dtos.candidates.CandidateListDTO;
+import com.example.demo.dtos.candidates.CandidateSearchDTO;
 import com.example.demo.exceptions.ExceptionUtils;
 import com.example.demo.exceptions.RCException;
 import com.example.demo.repositories.CandidateRepository;
 import com.example.demo.services.CandidateService;
 import com.example.demo.utils.Utils;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class CandidateServiceImpl implements CandidateService {
+
+  @PersistenceContext private final EntityManager entityManager;
 
   private final CandidateRepository candidateRepository;
 
@@ -39,6 +56,7 @@ public class CandidateServiceImpl implements CandidateService {
             .numberOfExp(dto.getNumberOfExp())
             .candidateIndex(newIndex)
             .fullNameUnsighted(Utils.getFullNameUnsighted(dto.getLastName(), dto.getFirstName()))
+            .email(dto.getEmail())
             .build();
     candidateRepository.save(newCandidate);
   }
@@ -57,6 +75,7 @@ public class CandidateServiceImpl implements CandidateService {
     Optional.ofNullable(dto.getLevel()).ifPresent(candidate::setLevel);
     Optional.ofNullable(dto.getGender()).ifPresent(candidate::setGender);
     Optional.ofNullable(dto.getNumberOfExp()).ifPresent(candidate::setNumberOfExp);
+    Optional.ofNullable(dto.getEmail()).ifPresent(candidate::setEmail);
     candidateRepository.save(candidate);
   }
 
@@ -66,23 +85,7 @@ public class CandidateServiceImpl implements CandidateService {
         candidateRepository
             .findById(id)
             .orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
-    String genderName = candidate.getGender().getName();
-    String fullName = Utils.getFullName(candidate.getLastName(), candidate.getFirstName());
-    CandidateDetailDTO candidateDetailDTO =
-        CandidateDetailDTO.builder()
-            .id(candidate.getId())
-            .firstName(candidate.getFirstName())
-            .lastName(candidate.getLastName())
-            .candidateCode(candidate.getCandidateCode())
-            .phone(candidate.getPhone())
-            .birthDate(candidate.getBirthDate())
-            .address(candidate.getAddress())
-            .level(candidate.getLevel())
-            .gender(candidate.getGender())
-            .genderName(genderName)
-            .numberOfExp(candidate.getNumberOfExp())
-            .fullName(fullName)
-            .build();
+    CandidateDetailDTO candidateDetailDTO = new CandidateDetailDTO(candidate);
     return candidateDetailDTO;
   }
 
@@ -93,5 +96,33 @@ public class CandidateServiceImpl implements CandidateService {
             .findById(id)
             .orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
     candidateRepository.delete(candidate);
+  }
+
+  @Override
+  public Page<CandidateListDTO> findCandidates(CandidateSearchDTO dto, Pageable pageable) {
+    CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+    CriteriaQuery<Candidate> cq = cb.createQuery(Candidate.class);
+    Root<Candidate> root = cq.from(Candidate.class);
+    List<Predicate> predicates = new ArrayList<>();
+    if (StringUtils.isNotBlank(dto.getFullName())) {
+      predicates.add(
+          cb.like(
+              cb.lower(root.get("fullNameUnsighted")),
+              '%' + Utils.convertToString(dto.getFullName().trim().toLowerCase()) + '%'));
+    }
+    cq.select(root).where(cb.and(predicates.toArray(new Predicate[0])));
+    TypedQuery<Candidate> candidateTypedQuery = entityManager.createQuery(cq);
+    candidateTypedQuery.setFirstResult((int) pageable.getOffset());
+    candidateTypedQuery.setMaxResults(pageable.getPageSize());
+    List<Candidate> candidates = candidateTypedQuery.getResultList();
+
+    List<CandidateListDTO> candidateListDTOs =
+        candidates.stream().map(CandidateListDTO::new).toList();
+
+    CriteriaQuery<Long> countCq = cb.createQuery(Long.class);
+    countCq.select(cb.count(countCq.from(Candidate.class)));
+    Long count = entityManager.createQuery(countCq).getSingleResult();
+
+    return new PageImpl<>(candidateListDTOs, pageable, count);
   }
 }

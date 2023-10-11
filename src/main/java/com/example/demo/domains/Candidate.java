@@ -1,19 +1,18 @@
 package com.example.demo.domains;
 
-import com.example.demo.dtos.candidates.CandidateCreateDTO;
 import com.example.demo.enums.GenderEnum;
 import com.example.demo.enums.LevelCandidateEnum;
-import com.example.demo.utils.Utils;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Audited
-@Table(name = "candidate")
+@Table(name = "candidates")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,6 +25,7 @@ public class Candidate extends Audit {
     @Column(name = "id")
     private int id;
 
+    @Getter
     @Column(name = "first_name", length = 100)
     private String firstName;
 
@@ -52,6 +52,7 @@ public class Candidate extends Audit {
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;
 
+    @Getter
     @Column(name = "number_of_exp")
     private int numberOfExp; // số năm kinh nghiệm
 
@@ -61,4 +62,14 @@ public class Candidate extends Audit {
 
     @Column(name = "full_name_unsighted", length = 200)
     private String fullNameUnsighted;
+
+    @Column(name = "email", length = 50)
+    private String email;
+
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CandidateEducation> educations;
+
+    public String getFullName() {
+        return this.lastName + " " + this.firstName;
+    }
 }

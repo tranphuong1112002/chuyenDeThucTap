@@ -10,7 +10,6 @@ import lombok.*;
  * sourceCode CRM.
  */
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Builder
@@ -22,5 +21,10 @@ public class RCException extends RuntimeException {
   public RCException(String msgKey) {
     this.messageKey = msgKey;
     this.message = String.format(ExceptionUtils.MESSAGES.get(this.messageKey));
+  }
+
+  public RCException(String msgKey, String msg) {
+    this.messageKey = msgKey;
+    this.message = msg;
   }
 }

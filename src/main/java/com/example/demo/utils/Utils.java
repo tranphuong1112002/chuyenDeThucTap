@@ -11,7 +11,7 @@ public class Utils {
 
     // chuyển tiếng việt có dấu thành không dấu
     public static String convertToString(String value) {
-        String temp = Normalizer.normalize(value, Normalizer.Form.NFD);
+        String temp = Normalizer.normalize(value.trim(), Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(temp).replaceAll("").replace("đ", "d").replace("Đ", "D");
     }

@@ -1,15 +1,17 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dtos.candidates.CandidateCreateDTO;
+import com.example.demo.dtos.candidates.CandidateSearchDTO;
 import com.example.demo.services.CandidateService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/candidate")
+@RequestMapping("/api/candidate")
 @RequiredArgsConstructor
 public class CandidateController {
 
@@ -37,5 +39,10 @@ public class CandidateController {
   public ResponseEntity<?> deleteCandidate(@PathVariable(name = "id") int id) {
     candidateService.deleteCandidate(id);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  }
+
+  @GetMapping
+  public ResponseEntity<?> getCandidate(CandidateSearchDTO dto, Pageable pageable) {
+    return ResponseEntity.status(HttpStatus.OK).body(candidateService.findCandidates(dto, pageable));
   }
 }
