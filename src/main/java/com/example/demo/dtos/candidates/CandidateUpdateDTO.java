@@ -38,4 +38,6 @@ public class CandidateUpdateDTO {
   @Email(message = "email không đúng định dạng")
   @NotBlank
   private String email;
+
+  private String source;
 }

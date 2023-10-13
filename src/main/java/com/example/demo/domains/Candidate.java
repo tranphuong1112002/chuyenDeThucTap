@@ -66,8 +66,14 @@ public class Candidate extends Audit {
     @Column(name = "email", length = 50)
     private String email;
 
+    @Column(name = "source", length = 50)
+    private String source; // nguồn ứng viên
+
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CandidateEducation> educations;
+
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CandidateWorkExperience> candidateWorkExperiences;
 
     public String getFullName() {
         return this.lastName + " " + this.firstName;

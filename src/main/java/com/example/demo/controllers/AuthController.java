@@ -18,17 +18,17 @@ public class AuthController {
 
   @PostMapping("/signup")
   public ResponseEntity<?> signUp(@RequestBody @Valid UserRequestDTO dto) {
-    userService.signIn(dto);
+    userService.signUp(dto);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @PostMapping("/signin")
   public ResponseEntity<?> signIn(@RequestBody @Valid UserLoginRequestDTO dto) {
-    return ResponseEntity.status(HttpStatus.OK).body(userService.signIn(dto));
+    return ResponseEntity.status(HttpStatus.OK).body(userService.signUp(dto));
   }
 
-  @GetMapping("/test")
+  @GetMapping("/me")
   public ResponseEntity<?> test() {
-    return ResponseEntity.status(HttpStatus.OK).body("dljflsdkjdlas");
+    return ResponseEntity.status(HttpStatus.OK).body(userService.getUserInfo());
   }
 }

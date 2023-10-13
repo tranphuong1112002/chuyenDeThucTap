@@ -13,9 +13,7 @@ import com.example.demo.repositories.UserRepository;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.security.services.UserDetailsImpl;
 import com.example.demo.services.UserService;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,7 +37,7 @@ public class UserServiceImpl implements UserService {
   private final JwtUtils jwtUtils;
 
   @Override
-  public void signIn(UserRequestDTO dto) {
+  public void signUp(UserRequestDTO dto) {
     if (userRepository.existsByUsername(dto.getUsername())) {
       throw new RCException(ExceptionUtils.E_USERNAME_EXISTED);
     }
@@ -54,7 +52,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserResponseDTO signIn(UserLoginRequestDTO dto) {
+  public UserResponseDTO signUp(UserLoginRequestDTO dto) {
     Authentication authentication =
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword()));
@@ -73,5 +71,12 @@ public class UserServiceImpl implements UserService {
     Set<RoleEnum> roleEnums = roles.stream().map(roleMap::get).collect(Collectors.toSet());
     Set<Role> roleSet = roleRepository.findAllByRoleIn(roleEnums);
     return new UserResponseDTO(jwt, userDetails.getUsername(), roleSet);
+  }
+
+  @Override
+  public User getUserInfo() {
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    User user = userRepository.findByUsername(username).get();
+    return user;
   }
 }

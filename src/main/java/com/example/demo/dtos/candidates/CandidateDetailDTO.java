@@ -39,6 +39,8 @@ public class CandidateDetailDTO {
 
   private String email;
 
+  private String source;
+
   public CandidateDetailDTO(Candidate candidate) {
     this.id = candidate.getId();
     this.firstName = candidate.getFirstName();
@@ -53,5 +55,6 @@ public class CandidateDetailDTO {
     this.numberOfExp = candidate.getNumberOfExp();
     this.fullName = candidate.getFullName();
     this.email = candidate.getEmail();
+    this.source = candidate.getSource();
   }
 }

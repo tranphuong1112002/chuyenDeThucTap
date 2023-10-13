@@ -11,6 +11,8 @@ import lombok.*;
 @Builder
 public class CandidateListDTO {
 
+  private int id;
+
   private String fullName;
 
   private String candidateCode;
@@ -24,6 +26,7 @@ public class CandidateListDTO {
   private String email;
 
   public CandidateListDTO(Candidate candidate) {
+    this.id = candidate.getId();
     this.fullName = candidate.getFullName();
     this.candidateCode = candidate.getCandidateCode();
     this.phone = candidate.getPhone();

@@ -57,6 +57,7 @@ public class CandidateServiceImpl implements CandidateService {
             .candidateIndex(newIndex)
             .fullNameUnsighted(Utils.getFullNameUnsighted(dto.getLastName(), dto.getFirstName()))
             .email(dto.getEmail())
+            .source(dto.getSource())
             .build();
     candidateRepository.save(newCandidate);
   }
@@ -76,6 +77,7 @@ public class CandidateServiceImpl implements CandidateService {
     Optional.ofNullable(dto.getGender()).ifPresent(candidate::setGender);
     Optional.ofNullable(dto.getNumberOfExp()).ifPresent(candidate::setNumberOfExp);
     Optional.ofNullable(dto.getEmail()).ifPresent(candidate::setEmail);
+    Optional.ofNullable(dto.getSource()).ifPresent(candidate::setSource);
     candidateRepository.save(candidate);
   }
 
@@ -109,6 +111,22 @@ public class CandidateServiceImpl implements CandidateService {
           cb.like(
               cb.lower(root.get("fullNameUnsighted")),
               '%' + Utils.convertToString(dto.getFullName().trim().toLowerCase()) + '%'));
+    }
+    if (StringUtils.isNotBlank(dto.getEmail())) {
+      predicates.add(
+          cb.like(cb.lower(root.get("email")), '%' + dto.getEmail().trim().toLowerCase() + '%'));
+    }
+    if (dto.getLevel() != null) {
+      predicates.add(cb.equal(root.get("level"), dto.getLevel()));
+    }
+    if (StringUtils.isNotBlank(dto.getPhone())) {
+      predicates.add(cb.equal(root.get("phone"), dto.getPhone()));
+    }
+    if (dto.getNumberOfExp() != null) {
+      predicates.add(cb.equal(root.get("numberOfExp"), dto.getNumberOfExp()));
+    }
+    if (StringUtils.isNotBlank(dto.getSource())) {
+      predicates.add(cb.equal(root.get("source"), dto.getSource()));
     }
     cq.select(root).where(cb.and(predicates.toArray(new Predicate[0])));
     TypedQuery<Candidate> candidateTypedQuery = entityManager.createQuery(cq);

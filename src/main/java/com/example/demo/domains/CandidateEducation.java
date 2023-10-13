@@ -1,6 +1,7 @@
 package com.example.demo.domains;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,7 +17,7 @@ import org.hibernate.envers.Audited;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CandidateEducation {
+public class CandidateEducation extends Audit {
 
     @Id
     @Column(name = "id")
@@ -47,6 +48,7 @@ public class CandidateEducation {
 
     @ManyToOne
     @JoinColumn(name = "candidate_id")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotNull
     private Candidate candidate;
 }

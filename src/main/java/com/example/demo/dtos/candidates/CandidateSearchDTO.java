@@ -19,4 +19,6 @@ public class CandidateSearchDTO {
   private LevelCandidateEnum level;
 
   private Integer numberOfExp;
+
+  private String source;
 }
