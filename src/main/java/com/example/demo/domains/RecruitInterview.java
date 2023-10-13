@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Audited
-@Table(name = "employees")
+@Table(name = "recruit_interviews")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,12 +21,6 @@ public class RecruitInterview extends Audit{
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private int id;
-
-  @Column(name = "candidate_code")
-  private String candidateCode; // Mã ứng viên
-
-  @Column(name = "employee_code")
-  private String employeeCode; // Mã nhân viên
 
   @OneToOne
   @JoinColumn(name = "employee_id")
