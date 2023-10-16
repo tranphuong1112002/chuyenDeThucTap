@@ -49,6 +49,5 @@ public class CandidateEducation extends Audit {
     @ManyToOne
     @JoinColumn(name = "candidate_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotNull
     private Candidate candidate;
 }

@@ -1,6 +1,8 @@
 package com.example.demo.services.impls;
 
 import com.example.demo.domains.CandidateWorkExperience;
+import com.example.demo.exceptions.ExceptionUtils;
+import com.example.demo.exceptions.RCException;
 import com.example.demo.repositories.CandidateWorkExperienceRepository;
 import com.example.demo.services.CandiateWorkExperienceService;
 import java.util.List;
@@ -27,13 +29,29 @@ public class CandiateWorkExperienceServiceImpl implements CandiateWorkExperience
   }
 
   @Override
-  public void update(int id, CandidateWorkExperience request) {}
+  public void update(int id, CandidateWorkExperience request) {
+    CandidateWorkExperience candidateWorkExperience =
+        candidateWorkExperienceRepository
+            .findById(id)
+            .orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
+    candidateWorkExperience.setTitle(request.getTitle());
+    candidateWorkExperience.setCompanyName(request.getCompanyName());
+    candidateWorkExperience.setStartDate(request.getStartDate());
+    candidateWorkExperience.setEndDate(request.getEndDate());
+    candidateWorkExperienceRepository.save(candidateWorkExperience);
+  }
 
   @Override
-  public void delete(int id) {}
+  public void delete(int id) {
+    CandidateWorkExperience candidateWorkExperience =
+        candidateWorkExperienceRepository
+            .findById(id)
+            .orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
+    candidateWorkExperienceRepository.deleteById(id);
+  }
 
   @Override
   public List<CandidateWorkExperience> getAll(int candiateId) {
-    return null;
+    return candidateWorkExperienceRepository.findAllByCandidateId(candiateId);
   }
 }
