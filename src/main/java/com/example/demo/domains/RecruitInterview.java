@@ -2,10 +2,9 @@ package com.example.demo.domains;
 
 import com.example.demo.enums.StatusEnum;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.*;
 import org.hibernate.envers.Audited;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Audited
@@ -22,11 +21,11 @@ public class RecruitInterview extends Audit{
   @Column(name = "id")
   private int id;
 
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "employee_id")
   private Employee employee;
 
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "candidate_id")
   private Candidate candidate;
 
