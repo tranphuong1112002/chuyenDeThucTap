@@ -69,6 +69,22 @@ public class Candidate extends Audit {
     @Column(name = "source", length = 50)
     private String source; // nguồn ứng viên
 
+    @Column(name = "apply_position", length = 100)
+    private String applyPosition;
+
+    @Column(name = "career_goals", length = 1000)
+    private String careerGoals;
+
+    @Column(name = "note", length = 1000)
+    private String note;
+
+    @Column(name = "hobbies", length = 200)
+    private String hobbies;
+
+    @Column(name = "expected_salary", length = 50)
+    private String expectedSalary;
+
+
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CandidateEducation> educations;
 

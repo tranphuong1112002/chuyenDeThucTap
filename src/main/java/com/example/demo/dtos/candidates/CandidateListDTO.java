@@ -25,6 +25,19 @@ public class CandidateListDTO {
 
   private String email;
 
+  private String careerGoals;
+
+
+  private String note;
+
+
+  private String hobbies;
+
+
+  private String expectedSalary;
+
+  private String applyPosition;
+
   public CandidateListDTO(Candidate candidate) {
     this.id = candidate.getId();
     this.fullName = candidate.getFullName();
@@ -33,5 +46,10 @@ public class CandidateListDTO {
     this.level = candidate.getLevel();
     this.numberOfExp = candidate.getNumberOfExp();
     this.email = candidate.getEmail();
+    this.careerGoals = candidate.getCareerGoals();
+    this.note = candidate.getNote();
+    this.hobbies = candidate.getHobbies();
+    this.expectedSalary = candidate.getExpectedSalary();
+    this.applyPosition = candidate.getApplyPosition();
   }
 }

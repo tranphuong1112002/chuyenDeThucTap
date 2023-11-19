@@ -5,7 +5,9 @@ import com.example.demo.exceptions.ExceptionUtils;
 import com.example.demo.exceptions.RCException;
 import com.example.demo.repositories.CandidateWorkExperienceRepository;
 import com.example.demo.services.CandiateWorkExperienceService;
+
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ public class CandiateWorkExperienceServiceImpl implements CandiateWorkExperience
             .companyName(request.getCompanyName())
             .startDate(request.getStartDate())
             .endDate(request.getEndDate())
+            .jobDescription(request.getJobDescription())
             .candidate(request.getCandidate())
             .build();
     candidateWorkExperienceRepository.save(candidateWorkExperience);
@@ -38,15 +41,15 @@ public class CandiateWorkExperienceServiceImpl implements CandiateWorkExperience
     candidateWorkExperience.setCompanyName(request.getCompanyName());
     candidateWorkExperience.setStartDate(request.getStartDate());
     candidateWorkExperience.setEndDate(request.getEndDate());
+    candidateWorkExperience.setJobDescription(request.getJobDescription());
     candidateWorkExperienceRepository.save(candidateWorkExperience);
   }
 
   @Override
   public void delete(int id) {
-    CandidateWorkExperience candidateWorkExperience =
-        candidateWorkExperienceRepository
-            .findById(id)
-            .orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
+    candidateWorkExperienceRepository
+        .findById(id)
+        .orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
     candidateWorkExperienceRepository.deleteById(id);
   }
 

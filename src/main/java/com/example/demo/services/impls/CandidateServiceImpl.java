@@ -17,9 +17,11 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -31,7 +33,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CandidateServiceImpl implements CandidateService {
 
-  @PersistenceContext private final EntityManager entityManager;
+  @PersistenceContext
+  private final EntityManager entityManager;
 
   private final CandidateRepository candidateRepository;
 
@@ -58,6 +61,11 @@ public class CandidateServiceImpl implements CandidateService {
             .fullNameUnsighted(Utils.getFullNameUnsighted(dto.getLastName(), dto.getFirstName()))
             .email(dto.getEmail())
             .source(dto.getSource())
+            .careerGoals(dto.getCareerGoals())
+            .applyPosition(dto.getApplyPosition())
+            .note(dto.getNote())
+            .expectedSalary(dto.getExpectedSalary())
+            .applyPosition(dto.getApplyPosition())
             .build();
     candidateRepository.save(newCandidate);
   }
@@ -78,6 +86,12 @@ public class CandidateServiceImpl implements CandidateService {
     Optional.ofNullable(dto.getNumberOfExp()).ifPresent(candidate::setNumberOfExp);
     Optional.ofNullable(dto.getEmail()).ifPresent(candidate::setEmail);
     Optional.ofNullable(dto.getSource()).ifPresent(candidate::setSource);
+    Optional.ofNullable(dto.getCareerGoals()).ifPresent(candidate::setCareerGoals);
+    Optional.ofNullable(dto.getNote()).ifPresent(candidate::setNote);
+    Optional.ofNullable(dto.getHobbies()).ifPresent(candidate::setHobbies);
+    Optional.ofNullable(dto.getExpectedSalary()).ifPresent(candidate::setExpectedSalary);
+    Optional.ofNullable(dto.getApplyPosition()).ifPresent(candidate::setApplyPosition);
+
     candidateRepository.save(candidate);
   }
 
@@ -87,8 +101,7 @@ public class CandidateServiceImpl implements CandidateService {
         candidateRepository
             .findById(id)
             .orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
-    CandidateDetailDTO candidateDetailDTO = new CandidateDetailDTO(candidate);
-    return candidateDetailDTO;
+    return new CandidateDetailDTO(candidate);
   }
 
   @Override

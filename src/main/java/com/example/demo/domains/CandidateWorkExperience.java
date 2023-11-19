@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.time.LocalDate;
 import lombok.*;
 import org.hibernate.envers.Audited;
+
+import java.time.LocalDate;
 
 @Entity
 @Audited
@@ -36,6 +37,9 @@ public class CandidateWorkExperience extends Audit {
 
   @Column(name = "end_date")
   private LocalDate endDate;
+
+  @Column(name = "job_description", length = 1000)
+  private String jobDescription;
 
   @ManyToOne
   @JoinColumn(name = "candidate_id")

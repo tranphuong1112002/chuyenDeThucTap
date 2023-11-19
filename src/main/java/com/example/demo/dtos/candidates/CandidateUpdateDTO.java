@@ -3,9 +3,7 @@ package com.example.demo.dtos.candidates;
 import com.example.demo.enums.GenderEnum;
 import com.example.demo.enums.LevelCandidateEnum;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -40,4 +38,17 @@ public class CandidateUpdateDTO {
   private String email;
 
   private String source;
+
+  private String careerGoals;
+
+
+  private String note;
+
+
+  private String hobbies;
+
+
+  private String expectedSalary;
+
+  private String applyPosition;
 }

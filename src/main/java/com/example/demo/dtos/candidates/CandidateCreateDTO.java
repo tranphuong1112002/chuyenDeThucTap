@@ -2,8 +2,12 @@ package com.example.demo.dtos.candidates;
 
 import com.example.demo.enums.GenderEnum;
 import com.example.demo.enums.LevelCandidateEnum;
-import jakarta.validation.constraints.*;
-import lombok.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
@@ -22,7 +26,8 @@ public class CandidateCreateDTO {
       message = "Số điện thoại không đúng định dạng")
   private String phone;
 
-  @NotNull private LocalDate birthDate;
+  @NotNull
+  private LocalDate birthDate;
 
   private String address;
 
@@ -37,4 +42,19 @@ public class CandidateCreateDTO {
   private String email;
 
   private String source;
+
+
+  private String applyPosition;
+
+
+  private String careerGoals;
+
+
+  private String note;
+
+
+  private String hobbies;
+
+
+  private String expectedSalary;
 }

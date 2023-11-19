@@ -3,7 +3,9 @@ package com.example.demo.dtos.candidates;
 import com.example.demo.domains.Candidate;
 import com.example.demo.enums.GenderEnum;
 import com.example.demo.enums.LevelCandidateEnum;
+
 import java.time.LocalDate;
+
 import lombok.*;
 
 @Getter
@@ -41,6 +43,20 @@ public class CandidateDetailDTO {
 
   private String source;
 
+  private String applyPosition;
+
+
+  private String careerGoals;
+
+
+  private String note;
+
+
+  private String hobbies;
+
+
+  private String expectedSalary;
+
   public CandidateDetailDTO(Candidate candidate) {
     this.id = candidate.getId();
     this.firstName = candidate.getFirstName();
@@ -56,5 +72,10 @@ public class CandidateDetailDTO {
     this.fullName = candidate.getFullName();
     this.email = candidate.getEmail();
     this.source = candidate.getSource();
+    this.careerGoals = candidate.getCareerGoals();
+    this.note = candidate.getNote();
+    this.hobbies = candidate.getHobbies();
+    this.expectedSalary = candidate.getExpectedSalary();
+    this.applyPosition = candidate.getApplyPosition();
   }
 }

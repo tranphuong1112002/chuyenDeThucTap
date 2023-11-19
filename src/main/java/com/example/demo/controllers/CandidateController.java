@@ -24,7 +24,7 @@ public class CandidateController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<?> createCandidate(
+  public ResponseEntity<?> updateCandidate(
       @PathVariable(name = "id") int id, @RequestBody @Valid CandidateCreateDTO dto) {
     candidateService.updateCandidate(id, dto);
     return ResponseEntity.status(HttpStatus.ACCEPTED).build();
