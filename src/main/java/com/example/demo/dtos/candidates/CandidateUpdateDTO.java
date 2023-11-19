@@ -2,6 +2,7 @@ package com.example.demo.dtos.candidates;
 
 import com.example.demo.enums.GenderEnum;
 import com.example.demo.enums.LevelCandidateEnum;
+import com.example.demo.enums.StatusEnum;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,4 +52,6 @@ public class CandidateUpdateDTO {
   private String expectedSalary;
 
   private String applyPosition;
+
+  private StatusEnum status;
 }

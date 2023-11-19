@@ -2,6 +2,7 @@ package com.example.demo.dtos.candidates;
 
 import com.example.demo.enums.GenderEnum;
 import com.example.demo.enums.LevelCandidateEnum;
+import com.example.demo.enums.StatusEnum;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -57,4 +58,5 @@ public class CandidateCreateDTO {
 
 
   private String expectedSalary;
+  private StatusEnum status;
 }

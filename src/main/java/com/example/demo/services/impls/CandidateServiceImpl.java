@@ -66,6 +66,7 @@ public class CandidateServiceImpl implements CandidateService {
             .note(dto.getNote())
             .expectedSalary(dto.getExpectedSalary())
             .applyPosition(dto.getApplyPosition())
+            .status(dto.getStatus())
             .build();
     candidateRepository.save(newCandidate);
   }
@@ -91,7 +92,7 @@ public class CandidateServiceImpl implements CandidateService {
     Optional.ofNullable(dto.getHobbies()).ifPresent(candidate::setHobbies);
     Optional.ofNullable(dto.getExpectedSalary()).ifPresent(candidate::setExpectedSalary);
     Optional.ofNullable(dto.getApplyPosition()).ifPresent(candidate::setApplyPosition);
-
+    Optional.ofNullable(dto.getStatus()).ifPresent(candidate::setStatus);
     candidateRepository.save(candidate);
   }
 

@@ -6,6 +6,7 @@ import com.example.demo.enums.LevelCandidateEnum;
 
 import java.time.LocalDate;
 
+import com.example.demo.enums.StatusEnum;
 import lombok.*;
 
 @Getter
@@ -56,6 +57,7 @@ public class CandidateDetailDTO {
 
 
   private String expectedSalary;
+  private StatusEnum status;
 
   public CandidateDetailDTO(Candidate candidate) {
     this.id = candidate.getId();
@@ -77,5 +79,6 @@ public class CandidateDetailDTO {
     this.hobbies = candidate.getHobbies();
     this.expectedSalary = candidate.getExpectedSalary();
     this.applyPosition = candidate.getApplyPosition();
+    this.status = candidate.getStatus();
   }
 }

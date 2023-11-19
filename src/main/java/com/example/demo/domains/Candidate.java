@@ -2,6 +2,7 @@ package com.example.demo.domains;
 
 import com.example.demo.enums.GenderEnum;
 import com.example.demo.enums.LevelCandidateEnum;
+import com.example.demo.enums.StatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.envers.Audited;
@@ -83,6 +84,9 @@ public class Candidate extends Audit {
 
     @Column(name = "expected_salary", length = 50)
     private String expectedSalary;
+
+    @Column(name = "status")
+    private StatusEnum status;
 
 
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

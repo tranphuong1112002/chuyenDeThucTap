@@ -1,8 +1,12 @@
 package com.example.demo.dtos.candidates;
 
 import com.example.demo.domains.Candidate;
+import com.example.demo.enums.GenderEnum;
 import com.example.demo.enums.LevelCandidateEnum;
+import com.example.demo.enums.StatusEnum;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -37,6 +41,10 @@ public class CandidateListDTO {
   private String expectedSalary;
 
   private String applyPosition;
+  private LocalDate birthDate;
+  private String address;
+  private GenderEnum gender;
+  private StatusEnum status;
 
   public CandidateListDTO(Candidate candidate) {
     this.id = candidate.getId();
@@ -51,5 +59,9 @@ public class CandidateListDTO {
     this.hobbies = candidate.getHobbies();
     this.expectedSalary = candidate.getExpectedSalary();
     this.applyPosition = candidate.getApplyPosition();
+    this.birthDate = candidate.getBirthDate();
+    this.address = candidate.getAddress();
+    this.gender = candidate.getGender();
+    this.status = candidate.getStatus();
   }
 }
