@@ -17,7 +17,7 @@ public class Employee extends Audit {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
-  private Long id;
+  private int id;
 
   @Column(name = "employee_code")
   private String employeeCode;

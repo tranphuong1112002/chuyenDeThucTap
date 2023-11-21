@@ -25,11 +25,11 @@ public class RecruitInterviewDTO {
 
   private String note;
 
-  public RecruitInterviewDTO(RecruitInterview recruitInterview) {
-    this.id = recruitInterview.getId();
-    this.status = recruitInterview.getStatus();
-    this.statusName = recruitInterview.getStatus().getName();
-    this.interviewTime = recruitInterview.getInterviewTime();
-    this.note = recruitInterview.getNote();
-  }
+//  public RecruitInterviewDTO(RecruitInterview recruitInterview) {
+//    this.id = recruitInterview.getId();
+//    this.status = recruitInterview.getStatus();
+//    this.statusName = recruitInterview.getStatus().getName();
+//    this.interviewTime = recruitInterview.getInterviewTime();
+//    this.note = recruitInterview.getNote();
+//  }
 }

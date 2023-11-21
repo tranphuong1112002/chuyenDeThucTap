@@ -5,10 +5,13 @@ import com.example.demo.dtos.candidates.CandidateCreateDTO;
 import com.example.demo.dtos.candidates.CandidateDetailDTO;
 import com.example.demo.dtos.candidates.CandidateListDTO;
 import com.example.demo.dtos.candidates.CandidateSearchDTO;
+import com.example.demo.dtos.users.UserRequestDTO;
+import com.example.demo.enums.RoleEnum;
 import com.example.demo.exceptions.ExceptionUtils;
 import com.example.demo.exceptions.RCException;
 import com.example.demo.repositories.CandidateRepository;
 import com.example.demo.services.CandidateService;
+import com.example.demo.services.UserService;
 import com.example.demo.utils.Utils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -37,6 +40,7 @@ public class CandidateServiceImpl implements CandidateService {
   private final EntityManager entityManager;
 
   private final CandidateRepository candidateRepository;
+  private final UserService userService;
 
   @Override
   public void createCandidate(CandidateCreateDTO dto) {
@@ -68,7 +72,14 @@ public class CandidateServiceImpl implements CandidateService {
             .applyPosition(dto.getApplyPosition())
             .status(dto.getStatus())
             .build();
-    candidateRepository.save(newCandidate);
+    Candidate candidate = candidateRepository.saveAndFlush(newCandidate);
+    int candidateId = candidate.getId();
+    UserRequestDTO userRequestDTO = UserRequestDTO.builder()
+        .username(dto.getEmail())
+        .password(dto.getPhone())
+        .candidateId(candidateId)
+        .build();
+    userService.signUp(userRequestDTO);
   }
 
   @Override
@@ -120,6 +131,10 @@ public class CandidateServiceImpl implements CandidateService {
     CriteriaQuery<Candidate> cq = cb.createQuery(Candidate.class);
     Root<Candidate> root = cq.from(Candidate.class);
     List<Predicate> predicates = new ArrayList<>();
+    var currentUser = userService.getUserInfo();
+    if (currentUser.getCandidateId() != null) {
+      return new PageImpl<>(candidateRepository.findById(currentUser.getCandidateId()).map(CandidateListDTO::new).stream().toList(), pageable, 1);
+    }
     if (StringUtils.isNotBlank(dto.getFullName())) {
       predicates.add(
           cb.like(

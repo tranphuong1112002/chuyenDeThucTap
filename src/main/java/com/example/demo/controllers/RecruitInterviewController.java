@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
 import com.example.demo.domains.RecruitInterview;
+import com.example.demo.dtos.recruits.RecruitInterviewCreateDTO;
+import com.example.demo.dtos.recruits.RecruitInterviewUpdateDTO;
 import com.example.demo.services.RecruitInterviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,21 +18,21 @@ public class RecruitInterviewController {
   private final RecruitInterviewService recruitInterviewService;
 
   @PostMapping
-  public ResponseEntity<?> create(@RequestBody @Valid RecruitInterview request) {
+  public ResponseEntity<?> create(@RequestBody @Valid RecruitInterviewCreateDTO request) {
     recruitInterviewService.create(request);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @PutMapping("/{id}")
   public ResponseEntity<?> update(
-      @PathVariable int id, @RequestBody @Valid RecruitInterview request) {
+      @PathVariable int id, @RequestBody @Valid RecruitInterviewUpdateDTO request) {
     recruitInterviewService.update(id, request);
     return ResponseEntity.status(HttpStatus.ACCEPTED).build();
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<?> get(@PathVariable(name = "id") int id) {
-    return ResponseEntity.status(HttpStatus.OK).body(recruitInterviewService.get(id));
+  @GetMapping("/{candidateId}")
+  public ResponseEntity<?> get(@PathVariable int candidateId) {
+    return ResponseEntity.status(HttpStatus.OK).body(recruitInterviewService.get(candidateId));
   }
 
   @GetMapping("/employee/{employeeId}")

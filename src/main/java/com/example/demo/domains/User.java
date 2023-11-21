@@ -37,4 +37,7 @@ public class User extends Audit {
     @OneToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    @Column(name = "candidate_id")
+    private Integer candidateId;
 }

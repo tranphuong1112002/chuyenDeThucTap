@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface RecruitInterviewRepository extends JpaRepository<RecruitInterview, Integer> {
 
-    @Query("select new com.example.demo.dtos.recruits.RecruitInterviewDTO(r) from RecruitInterview r where r.employee.id = :employeeId")
-    List<RecruitInterviewDTO> getRecruitInterviewList(int employeeId);
+    @Query(value = "select r from RecruitInterview r where r.candidate.id = :candidateId")
+    RecruitInterview findByCandidateId(int candidateId);
 }

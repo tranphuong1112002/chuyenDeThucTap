@@ -41,14 +41,24 @@ public class UserServiceImpl implements UserService {
     if (userRepository.existsByUsername(dto.getUsername())) {
       throw new RCException(ExceptionUtils.E_USERNAME_EXISTED);
     }
-    Set<Role> roles = roleRepository.findAllByRoleIn(dto.getRoles());
-    User user =
-        User.builder()
-            .username(dto.getUsername())
-            .password(encoder.encode(dto.getPassword()))
-            .roles(roles)
-            .build();
-    userRepository.save(user);
+    if (dto.getRoles() != null) {
+      Set<Role> roles = roleRepository.findAllByRoleIn(dto.getRoles());
+      User user =
+          User.builder()
+              .username(dto.getUsername())
+              .password(encoder.encode(dto.getPassword()))
+              .roles(roles)
+              .build();
+      userRepository.save(user);
+    } else {
+      User user =
+          User.builder()
+              .username(dto.getUsername())
+              .password(encoder.encode(dto.getPassword()))
+              .candidateId(dto.getCandidateId())
+              .build();
+      userRepository.save(user);
+    }
   }
 
   @Override
