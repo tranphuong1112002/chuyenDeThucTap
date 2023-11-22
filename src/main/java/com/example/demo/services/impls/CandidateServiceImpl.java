@@ -6,7 +6,6 @@ import com.example.demo.dtos.candidates.CandidateDetailDTO;
 import com.example.demo.dtos.candidates.CandidateListDTO;
 import com.example.demo.dtos.candidates.CandidateSearchDTO;
 import com.example.demo.dtos.users.UserRequestDTO;
-import com.example.demo.enums.RoleEnum;
 import com.example.demo.exceptions.ExceptionUtils;
 import com.example.demo.exceptions.RCException;
 import com.example.demo.repositories.CandidateRepository;
@@ -20,17 +19,16 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -156,6 +154,9 @@ public class CandidateServiceImpl implements CandidateService {
     }
     if (StringUtils.isNotBlank(dto.getSource())) {
       predicates.add(cb.equal(root.get("source"), dto.getSource()));
+    }
+    if(StringUtils.isNotBlank(dto.getCandidateCode())){
+      predicates.add(cb.equal(root.get("candidateCode"), dto.getCandidateCode()));
     }
     cq.select(root).where(cb.and(predicates.toArray(new Predicate[0])));
     TypedQuery<Candidate> candidateTypedQuery = entityManager.createQuery(cq);

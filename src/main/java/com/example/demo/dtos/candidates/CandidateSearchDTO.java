@@ -21,4 +21,6 @@ public class CandidateSearchDTO {
   private Integer numberOfExp;
 
   private String source;
+
+  private String candidateCode;
 }
