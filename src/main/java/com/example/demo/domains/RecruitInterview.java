@@ -40,6 +40,10 @@ public class RecruitInterview extends Audit{
   @Enumerated(EnumType.STRING)
   private StatusEnum statusPV;
 
+  @Column(name = "status_tgpv", length = 20)
+  @Enumerated(EnumType.STRING)
+  private StatusEnum statusTGPV;
+
   @Column(name = "status_kq", length = 20)
   @Enumerated(EnumType.STRING)
   private StatusEnum statusKQ;
@@ -132,8 +136,8 @@ public class RecruitInterview extends Audit{
   @Column(name = "type")
   private String type;
 
-  @Column(name = "salary_increase_expect")
-  private Integer salaryIncreaseExpect;
+  @Column(name = "time_increase_salary")
+  private String salaryIncreaseExpect;
 
   @Column(name = "salary_deal")
   private Double salaryDeal;
