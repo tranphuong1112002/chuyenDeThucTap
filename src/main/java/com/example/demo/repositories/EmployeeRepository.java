@@ -13,4 +13,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     @Query(value = "select e from Employee e where e.id = :id")
     Employee findById(int id);
+
+    @Query(value = "select max(c.employeeIndex) from Employee c")
+    Integer findMaxIndex();
 }

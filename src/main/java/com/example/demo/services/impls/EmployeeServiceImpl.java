@@ -23,4 +23,23 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getEmployee(int id) {
         return employeeRepository.findById(id);
     }
+
+  @Override
+  public void createEmployee(Employee dto) {
+    Integer maxIndex = employeeRepository.findMaxIndex();
+    if (maxIndex == null) {
+      maxIndex = 0;
+    }
+    int newIndex = maxIndex + 1;
+    String employeeCode = "NV" + String.format("%05d", newIndex);
+    Employee newEmp = Employee.builder()
+        .firstName(dto.getFirstName())
+        .lastName(dto.getLastName())
+        .employeeCode(employeeCode)
+        .jobTitle(dto.getJobTitle())
+        .department(dto.getDepartment())
+        .employeeIndex(newIndex)
+        .build();
+    employeeRepository.save(newEmp);
+  }
 }

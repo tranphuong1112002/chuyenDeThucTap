@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.domains.CandidateWorkExperience;
+import com.example.demo.domains.Employee;
 import com.example.demo.services.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +23,12 @@ public class EmployeeController {
   @GetMapping("/{id}")
   public ResponseEntity<?> getEmployee(@PathVariable int id) {
     return ResponseEntity.ok(employeeService.getEmployee(id));
+  }
+
+  @PostMapping
+  public ResponseEntity<?> create(@RequestBody @Valid Employee dto)
+  {
+    employeeService.createEmployee(dto);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 }

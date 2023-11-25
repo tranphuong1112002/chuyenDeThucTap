@@ -28,6 +28,16 @@ public class Employee extends Audit {
   @Column(name = "last_name")
   private String lastName;
 
+  @Column(name = "job_title")
+  private String jobTitle;
+
+  @Column(name = "department")
+  private String department;
+
+  @Column(name = "employee_index")
+  private Integer employeeIndex;
+
+
   public String getFullName() {
     return this.lastName + " " + this.firstName;
   }
