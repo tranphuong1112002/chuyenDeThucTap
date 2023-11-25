@@ -137,7 +137,7 @@ public class RecruitInterview extends Audit{
   private String type;
 
   @Column(name = "time_increase_salary")
-  private String salaryIncreaseExpect;
+  private String timeIncreaseSalary;
 
   @Column(name = "salary_deal")
   private Double salaryDeal;

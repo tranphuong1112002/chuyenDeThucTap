@@ -1,9 +1,6 @@
 package com.example.demo.dtos.recruits;
 
-import com.example.demo.domains.Candidate;
-import com.example.demo.domains.Employee;
 import com.example.demo.enums.StatusEnum;
-import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,6 +15,8 @@ public class RecruitInterviewUpdateDTO {
 
 
   private StatusEnum statusPV;
+
+  private StatusEnum statusTGPV;
 
   private StatusEnum statusKQ;
 
@@ -76,7 +75,7 @@ public class RecruitInterviewUpdateDTO {
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime time;
 
-  private Integer salaryIncreaseExpect;
+  private String timeIncreaseSalary;
 
   private Double salaryDeal;
 }
