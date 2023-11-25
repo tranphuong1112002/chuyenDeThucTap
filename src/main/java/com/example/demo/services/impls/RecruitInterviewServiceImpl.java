@@ -135,6 +135,9 @@ public class RecruitInterviewServiceImpl implements RecruitInterviewService {
     if (request.getSalaryDeal() != null) {
       recruitInterview.setSalaryDeal(request.getSalaryDeal());
     }
+    if (!request.getAddress().isBlank()) {
+      recruitInterview.setAddress(request.getAddress());
+    }
     recruitInterviewRepository.save(recruitInterview);
   }
 

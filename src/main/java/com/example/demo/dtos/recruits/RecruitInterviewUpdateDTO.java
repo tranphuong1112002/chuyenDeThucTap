@@ -78,4 +78,6 @@ public class RecruitInterviewUpdateDTO {
   private String timeIncreaseSalary;
 
   private Double salaryDeal;
+
+  private String address;
 }

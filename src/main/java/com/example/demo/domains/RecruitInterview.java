@@ -138,4 +138,7 @@ public class RecruitInterview extends Audit{
 
   @Column(name = "salary_deal")
   private Double salaryDeal;
+
+  @Column(name = "address")
+  private String address;
 }
