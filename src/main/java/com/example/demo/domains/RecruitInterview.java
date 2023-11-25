@@ -1,11 +1,11 @@
 package com.example.demo.domains;
 
 import com.example.demo.enums.StatusEnum;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 import lombok.*;
 import org.hibernate.envers.Audited;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Audited
@@ -22,15 +22,12 @@ public class RecruitInterview extends Audit{
   @Column(name = "id")
   private int id;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "employee_id")
-  @JsonIgnore
-  private Employee employee;
+  @Column(name = "employee_id")
+  private Integer employeeId;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "candidate_id")
-  @JsonIgnore
-  private Candidate candidate;
+
+  @Column(name = "candidate_id")
+  private Integer candidateId;
 
   @Column(name = "status_dg", length = 20)
   @Enumerated(EnumType.STRING)

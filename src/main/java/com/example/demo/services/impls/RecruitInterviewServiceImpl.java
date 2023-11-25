@@ -31,7 +31,7 @@ public class RecruitInterviewServiceImpl implements RecruitInterviewService {
   public void create(RecruitInterviewCreateDTO request) {
     Employee employee = employeeRepository.findById(request.getEmployeeId());
     Candidate candidate = candidateRepository.findById(request.getCandidateId()).orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
-    RecruitInterview recruitInterview = RecruitInterview.builder().statusDG(request.getStatusDG()).employee(employee).candidate(candidate).note(request.getNote()).build();
+    RecruitInterview recruitInterview = RecruitInterview.builder().statusDG(request.getStatusDG()).employeeId(employee.getId()).candidateId(candidate.getId()).note(request.getNote()).build();
     recruitInterviewRepository.save(recruitInterview);
   }
 
