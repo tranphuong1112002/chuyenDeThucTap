@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum StatusEnum {
+  CHO_DANH_GIA("CHO_DANH_GIA", "Chờ đánh giá"),
   TU_CHOI("TU_CHOI", "Từ chối"),
   DANH_GIA("DANH_GIA", "Đánh giá"),
   PHONG_VAN("PHONG_VAN", "Phỏng vấn"),

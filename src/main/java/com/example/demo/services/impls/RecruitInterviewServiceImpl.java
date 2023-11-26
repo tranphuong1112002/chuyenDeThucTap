@@ -32,11 +32,13 @@ public class RecruitInterviewServiceImpl implements RecruitInterviewService {
     Employee employee = employeeRepository.findById(request.getEmployeeId());
     Candidate candidate = candidateRepository.findById(request.getCandidateId()).orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
     RecruitInterview byCandidateId = recruitInterviewRepository.findByCandidateId(request.getCandidateId());
+    candidate.setStatus(request.getStatusDG());
     if(byCandidateId != null){
       byCandidateId.setStatusDG(request.getStatusDG());
       byCandidateId.setNote(request.getNote());
       byCandidateId.setEmployeeId(request.getEmployeeId());
       recruitInterviewRepository.save(byCandidateId);
+      candidateRepository.save(candidate);
       return;
     }
     RecruitInterview recruitInterview = RecruitInterview.builder().statusDG(request.getStatusDG()).employeeId(employee.getId()).candidateId(candidate.getId()).note(request.getNote()).build();
@@ -46,7 +48,7 @@ public class RecruitInterviewServiceImpl implements RecruitInterviewService {
   @Override
   public void update(int id, RecruitInterviewUpdateDTO request) {
     RecruitInterview recruitInterview = recruitInterviewRepository.findById(id).orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
-
+    var candidate = candidateRepository.findById(recruitInterview.getCandidateId()).orElseThrow();
     if (request.getExpertise() != null) {
       recruitInterview.setExpertise(request.getExpertise());
     }// Kiến thức chuyên môn
@@ -118,15 +120,22 @@ public class RecruitInterviewServiceImpl implements RecruitInterviewService {
     }
     if (request.getStatusKQ() != null) {
       recruitInterview.setStatusKQ(request.getStatusKQ());
+      candidate.setStatus(request.getStatusKQ());
     }
     if (request.getStatusPV() != null) {
       recruitInterview.setStatusPV(request.getStatusPV());
+      candidate.setStatus(request.getStatusPV());
+
     }
     if (request.getStatusTGPV() != null) {
       recruitInterview.setStatusTGPV(request.getStatusTGPV());
+      candidate.setStatus(request.getStatusTGPV());
+
     }
     if (request.getStatusKL() != null) {
       recruitInterview.setStatusKL(request.getStatusKL());
+      candidate.setStatus(request.getStatusKL());
+
     }
     if (request.getTime() != null) {
       recruitInterview.setTime(request.getTime());
@@ -147,6 +156,7 @@ public class RecruitInterviewServiceImpl implements RecruitInterviewService {
       recruitInterview.setAddress(request.getAddress());
     }
     recruitInterviewRepository.save(recruitInterview);
+    candidateRepository.save(candidate);
   }
 
   @Override

@@ -6,6 +6,7 @@ import com.example.demo.dtos.candidates.CandidateDetailDTO;
 import com.example.demo.dtos.candidates.CandidateListDTO;
 import com.example.demo.dtos.candidates.CandidateSearchDTO;
 import com.example.demo.dtos.users.UserRequestDTO;
+import com.example.demo.enums.StatusEnum;
 import com.example.demo.exceptions.ExceptionUtils;
 import com.example.demo.exceptions.RCException;
 import com.example.demo.repositories.CandidateRepository;
@@ -68,7 +69,7 @@ public class CandidateServiceImpl implements CandidateService {
             .note(dto.getNote())
             .expectedSalary(dto.getExpectedSalary())
             .applyPosition(dto.getApplyPosition())
-            .status(dto.getStatus())
+            .status(StatusEnum.CHO_DANH_GIA)
             .build();
     Candidate candidate = candidateRepository.saveAndFlush(newCandidate);
     int candidateId = candidate.getId();
