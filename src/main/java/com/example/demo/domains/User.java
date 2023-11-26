@@ -2,12 +2,11 @@ package com.example.demo.domains;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.envers.Audited;
 
 import java.util.Set;
 
 @Entity
-@Audited
+ 
 @Table(name = "users")
 @Getter
 @Setter

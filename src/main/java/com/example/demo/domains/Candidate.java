@@ -5,14 +5,12 @@ import com.example.demo.enums.LevelCandidateEnum;
 import com.example.demo.enums.StatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Audited
 @Table(name = "candidates")
 @Getter
 @Setter

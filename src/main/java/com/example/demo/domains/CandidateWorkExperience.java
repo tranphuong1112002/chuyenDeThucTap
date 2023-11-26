@@ -5,12 +5,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.envers.Audited;
 
 import java.time.LocalDate;
 
 @Entity
-@Audited
 @Table(name = "candidate_work_experiences")
 @Getter
 @Setter

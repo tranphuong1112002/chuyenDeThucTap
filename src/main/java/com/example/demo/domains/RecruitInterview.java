@@ -3,12 +3,11 @@ package com.example.demo.domains;
 import com.example.demo.enums.StatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.envers.Audited;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Audited
+ 
 @Table(name = "recruit_interviews")
 @Getter
 @Setter

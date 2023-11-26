@@ -3,12 +3,12 @@ package com.example.demo.domains;
 import com.example.demo.enums.RoleEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import java.util.Set;
 import lombok.*;
-import org.hibernate.envers.Audited;
+
+import java.util.Set;
 
 @Entity
-@Audited
+ 
 @Table(name = "roles")
 @Getter
 @Setter

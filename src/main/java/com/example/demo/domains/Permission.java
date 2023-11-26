@@ -4,12 +4,11 @@ import com.example.demo.enums.PermissionEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.envers.Audited;
 
 import java.util.Set;
 
 @Entity
-@Audited
+ 
 @Table(name = "permissions")
 @Getter
 @Setter
