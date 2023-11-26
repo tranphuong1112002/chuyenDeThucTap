@@ -36,6 +36,7 @@ public class RecruitInterviewServiceImpl implements RecruitInterviewService {
       byCandidateId.setStatusDG(request.getStatusDG());
       byCandidateId.setNote(request.getNote());
       byCandidateId.setEmployeeId(request.getEmployeeId());
+      recruitInterviewRepository.save(byCandidateId);
       return;
     }
     RecruitInterview recruitInterview = RecruitInterview.builder().statusDG(request.getStatusDG()).employeeId(employee.getId()).candidateId(candidate.getId()).note(request.getNote()).build();
