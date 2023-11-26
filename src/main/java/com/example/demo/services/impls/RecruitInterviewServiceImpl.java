@@ -39,10 +39,10 @@ public class RecruitInterviewServiceImpl implements RecruitInterviewService {
   public void update(int id, RecruitInterviewUpdateDTO request) {
     RecruitInterview recruitInterview = recruitInterviewRepository.findById(id).orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
 
-    if (!request.getExpertise().isBlank()) {
+    if (request.getExpertise() != null) {
       recruitInterview.setExpertise(request.getExpertise());
     }// Kiến thức chuyên môn
-    if (!request.getExperience().isBlank()) {
+    if (request.getExperience() != null) {
       recruitInterview.setExperience(request.getExperience()); // Kinh nghiệm
     }
     if (request.getEnglishPoint() != null) {
@@ -90,22 +90,22 @@ public class RecruitInterviewServiceImpl implements RecruitInterviewService {
     if (request.getOvertimePotentialPoint() != null) {
       recruitInterview.setOvertimePotentialPoint(request.getOvertimePotentialPoint()); // Sẵn sàng OT
     }
-    if (!request.getGeneralReview().isBlank()) {
+    if (request.getGeneralReview() != null) {
       recruitInterview.setGeneralReview(request.getGeneralReview()); // Đánh giá chung
     }
-    if (!request.getResult().isBlank()) {
+    if (request.getResult() != null) {
       recruitInterview.setResult(request.getResult()); // Kết quả
     }
     if (request.getSalaryExpect() != null) {
       recruitInterview.setSalaryExpect(request.getSalaryExpect()); // mức lương mong muốn
     }
-    if (!request.getNotePV().isBlank()) {
+    if (request.getNotePV() != null) {
       recruitInterview.setNotePV(request.getNotePV());
     }
-    if (!request.getNoteKQ().isBlank()) {
+    if (request.getNoteKQ() != null) {
       recruitInterview.setNoteKQ(request.getNoteKQ());
     }
-    if (!request.getNoteKL().isBlank()) {
+    if (request.getNoteKL() != null) {
       recruitInterview.setNoteKL(request.getNoteKL());
     }
     if (request.getStatusKQ() != null) {
@@ -123,19 +123,19 @@ public class RecruitInterviewServiceImpl implements RecruitInterviewService {
     if (request.getTime() != null) {
       recruitInterview.setTime(request.getTime());
     }
-    if (!request.getType().isBlank()) {
+    if (request.getType() != null) {
       recruitInterview.setType(request.getType());
     }
     if (request.getSalaryExpect() != null) {
       recruitInterview.setSalaryExpect(request.getSalaryExpect());
     }
-    if (request.getTimeIncreaseSalary().isBlank()) {
+    if (request.getTimeIncreaseSalary() != null) {
       recruitInterview.setTimeIncreaseSalary(request.getTimeIncreaseSalary());
     }
     if (request.getSalaryDeal() != null) {
       recruitInterview.setSalaryDeal(request.getSalaryDeal());
     }
-    if (!request.getAddress().isBlank()) {
+    if (request.getAddress() != null) {
       recruitInterview.setAddress(request.getAddress());
     }
     recruitInterviewRepository.save(recruitInterview);
