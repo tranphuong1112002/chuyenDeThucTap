@@ -159,6 +159,9 @@ public class CandidateServiceImpl implements CandidateService {
     if(StringUtils.isNotBlank(dto.getCandidateCode())){
       predicates.add(cb.equal(root.get("candidateCode"), dto.getCandidateCode()));
     }
+    if(dto.getStatus() != null){
+      predicates.add(cb.equal(root.get("status"), dto.getStatus()));
+    }
     cq.select(root).where(cb.and(predicates.toArray(new Predicate[0])));
     TypedQuery<Candidate> candidateTypedQuery = entityManager.createQuery(cq);
     candidateTypedQuery.setFirstResult((int) pageable.getOffset());

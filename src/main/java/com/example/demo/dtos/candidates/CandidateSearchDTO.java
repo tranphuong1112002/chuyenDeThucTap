@@ -1,6 +1,7 @@
 package com.example.demo.dtos.candidates;
 
 import com.example.demo.enums.LevelCandidateEnum;
+import com.example.demo.enums.StatusEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,4 +24,6 @@ public class CandidateSearchDTO {
   private String source;
 
   private String candidateCode;
+
+  private StatusEnum status;
 }

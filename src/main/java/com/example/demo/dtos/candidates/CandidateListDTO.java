@@ -46,6 +46,8 @@ public class CandidateListDTO {
   private GenderEnum gender;
   private StatusEnum status;
 
+  private String genderName;
+
   public CandidateListDTO(Candidate candidate) {
     this.id = candidate.getId();
     this.fullName = candidate.getFullName();
@@ -62,6 +64,7 @@ public class CandidateListDTO {
     this.birthDate = candidate.getBirthDate();
     this.address = candidate.getAddress();
     this.gender = candidate.getGender();
+    this.genderName = gender.getName();
     this.status = candidate.getStatus();
   }
 }

@@ -12,11 +12,10 @@ import com.example.demo.repositories.CandidateRepository;
 import com.example.demo.repositories.EmployeeRepository;
 import com.example.demo.repositories.RecruitInterviewRepository;
 import com.example.demo.services.RecruitInterviewService;
-
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +32,7 @@ public class RecruitInterviewServiceImpl implements RecruitInterviewService {
     Candidate candidate = candidateRepository.findById(request.getCandidateId()).orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
     RecruitInterview byCandidateId = recruitInterviewRepository.findByCandidateId(request.getCandidateId());
     candidate.setStatus(request.getStatusDG());
-    if(byCandidateId != null){
+    if (byCandidateId != null) {
       byCandidateId.setStatusDG(request.getStatusDG());
       byCandidateId.setNote(request.getNote());
       byCandidateId.setEmployeeId(request.getEmployeeId());
