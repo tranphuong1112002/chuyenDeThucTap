@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dtos.candidates.CandidateCreateDTO;
+import com.example.demo.dtos.candidates.CandidateDashboardDTO;
 import com.example.demo.dtos.candidates.CandidateSearchDTO;
 import com.example.demo.services.CandidateService;
 import jakarta.validation.Valid;
@@ -44,5 +45,10 @@ public class CandidateController {
   @GetMapping
   public ResponseEntity<?> getCandidate(CandidateSearchDTO dto, Pageable pageable) {
     return ResponseEntity.status(HttpStatus.OK).body(candidateService.findCandidates(dto, pageable));
+  }
+
+  @GetMapping("/dashboard")
+  public ResponseEntity<?> getDashboard() {
+    return ResponseEntity.status(HttpStatus.OK).body(candidateService.getDashboard());
   }
 }
