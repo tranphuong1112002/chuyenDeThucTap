@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
 public class RecruitInterview extends Audit{
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "recruit_interviews_generator")
+  @SequenceGenerator(name = "recruit_interviews_generator", sequenceName = "recruit_interviews_seq", initialValue = 8, allocationSize = 1)
   @Column(name = "id")
   private int id;
 

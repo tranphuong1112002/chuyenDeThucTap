@@ -18,7 +18,8 @@ import java.util.Set;
 public class Permission {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "permissions_generator")
+    @SequenceGenerator(name = "permissions_generator", sequenceName = "permissions_seq", initialValue = 9, allocationSize = 1)
     @Column(name = "id")
     private int id;
 

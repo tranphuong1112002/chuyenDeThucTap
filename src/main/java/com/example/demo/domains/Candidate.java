@@ -20,7 +20,8 @@ import java.util.List;
 public class Candidate extends Audit {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "candidate_generator")
+    @SequenceGenerator(name = "candidate_generator", sequenceName = "candidate_seq", initialValue = 28, allocationSize = 1)
     @Column(name = "id")
     private int id;
 

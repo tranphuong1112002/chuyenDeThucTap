@@ -14,7 +14,8 @@ import lombok.*;
 public class Employee extends Audit {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employees_generator")
+  @SequenceGenerator(name = "employees_generator", sequenceName = "employees_seq", initialValue = 9, allocationSize = 1)
   @Column(name = "id")
   private int id;
 

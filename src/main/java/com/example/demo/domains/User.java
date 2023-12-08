@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.Set;
 
 @Entity
- 
+
 @Table(name = "users")
 @Getter
 @Setter
@@ -16,7 +16,8 @@ import java.util.Set;
 public class User extends Audit {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
+    @SequenceGenerator(name = "user_generator", sequenceName = "user_seq", initialValue = 39, allocationSize = 1)
     @Column(name = "id")
     private int id;
 

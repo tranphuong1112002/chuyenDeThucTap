@@ -139,7 +139,7 @@ public class CandidateServiceImpl implements CandidateService {
             predicates.add(
                     cb.like(
                             cb.lower(root.get("fullNameUnsighted")),
-                            '%' + (dto.getFullName().trim().toLowerCase()) + '%'));
+                            '%' + Utils.convertToString(dto.getFullName().trim().toLowerCase()) + '%'));
         }
         if (StringUtils.isNotBlank(dto.getEmail())) {
             predicates.add(
@@ -157,9 +157,6 @@ public class CandidateServiceImpl implements CandidateService {
         }
         if (dto.getNumberOfExp() != null) {
             predicates.add(cb.equal(root.get("numberOfExp"), dto.getNumberOfExp()));
-        }
-        if (StringUtils.isNotBlank(dto.getSource())) {
-            predicates.add(cb.equal(root.get("source"), dto.getSource()));
         }
         if (StringUtils.isNotBlank(dto.getCandidateCode())) {
             predicates.add(cb.equal(root.get("candidateCode"), dto.getCandidateCode()));

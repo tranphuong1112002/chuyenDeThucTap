@@ -18,8 +18,9 @@ import java.time.LocalDate;
 public class CandidateWorkExperience extends Audit {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "candidate_work_experiences_generator")
+  @SequenceGenerator(name = "candidate_work_experiences_generator", sequenceName = "candidate_work_experiences_seq", initialValue = 14, allocationSize = 1)
   @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(name = "title")
