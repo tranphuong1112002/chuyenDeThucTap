@@ -13,7 +13,7 @@ public enum StatusEnum {
   THAM_GIA_PHONG_VAN("THAM_GIA", "Tham gia phỏng vấn"),
   KET_QUA_PHONG_VAN("OFFER", "Kết quả phỏng vấn"),
   KET_LUAN_TU_CHOI("KET_LUAN_TU_CHOI", "Kết luận từ chối"),
-  KET_LUAN_DONG_Y("KET_LUAN_DONG_Y", "Kết luận đồng ý");
+  KET_LUAN_DONG_Y("KET_LUAN_DONG_Y", "Kết luận tuyển dụng");
 
 
   private final String code;

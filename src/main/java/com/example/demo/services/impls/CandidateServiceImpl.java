@@ -9,6 +9,7 @@ import com.example.demo.exceptions.RCException;
 import com.example.demo.repositories.CandidateRepository;
 import com.example.demo.services.CandidateService;
 import com.example.demo.services.UserService;
+import com.example.demo.utils.ExcelUtils;
 import com.example.demo.utils.Utils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -17,13 +18,16 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,45 +50,16 @@ public class CandidateServiceImpl implements CandidateService {
     }
     int newIndex = maxIndex + 1;
     String candidateCode = "UV" + String.format("%05d", newIndex);
-    Candidate newCandidate =
-        Candidate.builder()
-            .firstName(dto.getFirstName())
-            .lastName(dto.getLastName())
-            .candidateCode(candidateCode)
-            .phone(dto.getPhone())
-            .birthDate(dto.getBirthDate())
-            .address(dto.getAddress())
-            .level(dto.getLevel())
-            .gender(dto.getGender())
-            .numberOfExp(dto.getNumberOfExp())
-            .candidateIndex(newIndex)
-            .fullNameUnsighted(Utils.getFullNameUnsighted(dto.getLastName(), dto.getFirstName()))
-            .email(dto.getEmail())
-            .source(dto.getSource())
-            .careerGoals(dto.getCareerGoals())
-            .applyPosition(dto.getApplyPosition())
-            .note(dto.getNote())
-            .expectedSalary(dto.getExpectedSalary())
-            .applyPosition(dto.getApplyPosition())
-            .status(StatusEnum.CHO_DANH_GIA)
-            .hobbies(dto.getHobbies())
-            .build();
+    Candidate newCandidate = Candidate.builder().firstName(dto.getFirstName()).lastName(dto.getLastName()).candidateCode(candidateCode).phone(dto.getPhone()).birthDate(dto.getBirthDate()).address(dto.getAddress()).level(dto.getLevel()).gender(dto.getGender()).numberOfExp(dto.getNumberOfExp()).candidateIndex(newIndex).fullNameUnsighted(Utils.getFullNameUnsighted(dto.getLastName(), dto.getFirstName())).email(dto.getEmail()).source(dto.getSource()).careerGoals(dto.getCareerGoals()).applyPosition(dto.getApplyPosition()).note(dto.getNote()).expectedSalary(dto.getExpectedSalary()).applyPosition(dto.getApplyPosition()).status(StatusEnum.CHO_DANH_GIA).hobbies(dto.getHobbies()).build();
     Candidate candidate = candidateRepository.saveAndFlush(newCandidate);
     int candidateId = candidate.getId();
-    UserRequestDTO userRequestDTO = UserRequestDTO.builder()
-        .username(dto.getEmail())
-        .password(dto.getPhone())
-        .candidateId(candidateId)
-        .build();
+    UserRequestDTO userRequestDTO = UserRequestDTO.builder().username(dto.getEmail()).password(dto.getPhone()).candidateId(candidateId).build();
     userService.signUp(userRequestDTO);
   }
 
   @Override
   public void updateCandidate(int id, CandidateCreateDTO dto) {
-    Candidate candidate =
-        candidateRepository
-            .findById(id)
-            .orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
+    Candidate candidate = candidateRepository.findById(id).orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
     Optional.ofNullable(dto.getFirstName()).ifPresent(candidate::setFirstName);
     Optional.ofNullable(dto.getLastName()).ifPresent(candidate::setLastName);
     Optional.ofNullable(dto.getPhone()).ifPresent(candidate::setPhone);
@@ -106,19 +81,13 @@ public class CandidateServiceImpl implements CandidateService {
 
   @Override
   public CandidateDetailDTO getCandidate(int id) {
-    Candidate candidate =
-        candidateRepository
-            .findById(id)
-            .orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
+    Candidate candidate = candidateRepository.findById(id).orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
     return new CandidateDetailDTO(candidate);
   }
 
   @Override
   public void deleteCandidate(int id) {
-    Candidate candidate =
-        candidateRepository
-            .findById(id)
-            .orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
+    Candidate candidate = candidateRepository.findById(id).orElseThrow(() -> new RCException(ExceptionUtils.E_RECORD_NOT_EXIST));
     candidateRepository.delete(candidate);
   }
 
@@ -133,18 +102,13 @@ public class CandidateServiceImpl implements CandidateService {
       return new PageImpl<>(candidateRepository.findById(currentUser.getCandidateId()).map(CandidateListDTO::new).stream().toList(), pageable, 1);
     }
     if (StringUtils.isNotBlank(dto.getFullName())) {
-      predicates.add(
-          cb.like(
-              cb.lower(root.get("fullNameUnsighted")),
-              '%' + Utils.convertToString(dto.getFullName().trim().toLowerCase()) + '%'));
+      predicates.add(cb.like(cb.lower(root.get("fullNameUnsighted")), '%' + Utils.convertToString(dto.getFullName().trim().toLowerCase()) + '%'));
     }
     if (StringUtils.isNotBlank(dto.getEmail())) {
-      predicates.add(
-          cb.like(cb.lower(root.get("email")), '%' + dto.getEmail().trim().toLowerCase() + '%'));
+      predicates.add(cb.like(cb.lower(root.get("email")), '%' + dto.getEmail().trim().toLowerCase() + '%'));
     }
     if (StringUtils.isNotBlank(dto.getSource())) {
-      predicates.add(
-          cb.like(cb.lower(root.get("source")), '%' + dto.getSource().trim().toLowerCase() + '%'));
+      predicates.add(cb.like(cb.lower(root.get("source")), '%' + dto.getSource().trim().toLowerCase() + '%'));
     }
     if (dto.getLevel() != null) {
       predicates.add(cb.equal(root.get("level"), dto.getLevel()));
@@ -167,8 +131,7 @@ public class CandidateServiceImpl implements CandidateService {
     candidateTypedQuery.setMaxResults(pageable.getPageSize());
     List<Candidate> candidates = candidateTypedQuery.getResultList();
 
-    List<CandidateListDTO> candidateListDTOs =
-        candidates.stream().map(CandidateListDTO::new).toList();
+    List<CandidateListDTO> candidateListDTOs = candidates.stream().map(CandidateListDTO::new).toList();
 
     CriteriaQuery<Long> countCq = cb.createQuery(Long.class);
     countCq.select(cb.count(countCq.from(Candidate.class)));
@@ -188,14 +151,32 @@ public class CandidateServiceImpl implements CandidateService {
     Double candidatePassCVPercent = 1.0 * candidatePassCV / totalCandidate;
     Double candidateAdmittedPercent = 1.0 * candidateAdmitted / totalCandidate;
 
-    return new CandidateDashboardDTO(
-        totalCandidate,
-        candidatePassCV,
-        candidateFailedCV,
-        candidateAdmitted,
-        candidateFailed,
-        candidatePassCVPercent,
-        candidateAdmittedPercent
-    );
+    return new CandidateDashboardDTO(totalCandidate, candidatePassCV, candidateFailedCV, candidateAdmitted, candidateFailed, candidatePassCVPercent, candidateAdmittedPercent);
+  }
+
+  @Override
+  public Object export(HttpServletRequest request, StatusEnum status) throws Exception {
+
+    List<Candidate> list;
+    if (status != null ) {
+      list = candidateRepository.findAllByStatusIs(status);
+    } else list = candidateRepository.findAll();
+    if (list.isEmpty()) {
+      throw new Exception();
+    }
+
+    // chuyển sang list obj
+    List<Object> dataExport = new ArrayList<>();
+    for (int i = 0; i < list.size(); i++) {
+      dataExport.add(new CandidateExportDTO(i + 1, list.get(i)));
+    }
+    // tạo workbook
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    try (Workbook workbook = ExcelUtils.executeExport(dataExport); bos) {
+      workbook.write(bos);
+    } catch (Exception e) {
+      throw e;
+    }
+    return bos.toByteArray();
   }
 }
